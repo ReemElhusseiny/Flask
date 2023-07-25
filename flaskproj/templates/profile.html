@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-lg-9 ">
+        <div class="user-info my-4 bg-light d-flex "style="border-radius: 15px;">
+<div class="col-lg-6 ">
+            <img src="https://icons-for-free.com/iconfiles/png/512/profile+profile+page+user+icon-1320186864367220794.png" style="border-radius: 150px;width:70px; margin:20px;margin-left: 50px;"> 
+             <h3 style="display: inline-block;">{{ context.user.username }}</h3>
+            </div>
+            <div class="col-lg-6  justify-content-end d-grid"  >
+            <p style=" margin: 20px;display: inline; padding-left:45px; ">Number of Friends: {{ context.user.friendships|length }}</p>
+            {% if context.user.id == current_user.id %}
+            <form method="POST" action="{{ url_for('edit_profile') }}" style="display: inline-block;">
+              <input type="hidden" name="edit" value="true">
+              <button type="submit" class=" mx-5 text-light" style="width:200px;background-color:#4F709C;border-radius:20px;">Edit Profile</button>
+          </form>
+            {% endif %}
+        </div>
+        </div>
+        <h2>My Posts</h2>
+          
+  <div class="post-list mx-5 ">
+    {% if context.posts %}
+      {% for post in context.posts %}
+    
+
+        <div class="post my-4  bg-light" style="box-shadow: 7px 7px 13px rgba(123, 116, 135, 0.568);border: 1px solid black; padding: 20px; border-radius: 15px;padding-bottom: 0px;">
+          <p><img src="https://icons-for-free.com/iconfiles/png/512/profile+profile+page+user+icon-1320186864367220794.png" style="border-radius: 150px;width:70px; margin-right: 10px;">  <a href="{{ url_for('users.profile', user_id=post.author.id) }}" style="text-decoration: none; font-size: 1.5rem; color: black;"> {{ post.author.username }} </a> </p>
+          
+          <div class=" mx-2 my-3 "  style="text-align: left;">
+          <h4>{{ post.title }}</h4>
+          <div class="m-3 w-75">
+          <p>{{ post.content }}</p>
+        </div>
+          <div class=" mx-2 my-3" >
+          {% if post.author == current_user %}
+          <hr style=" size:2; width:100%; color:black; text-align:center; " >
+
+          <div class="post-actions" style="display: flex; justify-content:center;">
+            
+            <form method="POST" action="{{ url_for('users.add_post', post_id=post.id) }}" style="display: inline-block ; margin: 10px;margin-bottom: 0px;">
+                <input type="hidden" name="edit" value="true">
+                <button type="submit" class="text-light"  style="width:300px;background-color:#4F709C;border-radius:20px;">Edit</button>
+            </form>
+            <form method="POST" action="{{ url_for('users.delete_post', post_id=post.id) }}" onsubmit="return confirm('Are you sure you want to delete this post?')" style="display: inline-block ; margin-bottom: 0px;margin: 10px;">
+                <input type="hidden" name="delete" value="true">
+                <button type="submit"class="text-light" style="width:300px;background-color:#7E1717;border-radius:20px;">Delete</button>
+            </form>
+            </div>
+        {% endif %}
+      </div>
+      </div>
+        </div>
+      {% endfor %}
+    {% else %}
+    <div class="bg-danger-subtle w-100 " style="height: 200px;font-size: 2rem; font-weight: bold ;padding:80px;">
+        <p style="text-align:center">No posts found !</p>
+      </div>
+    {% endif %}
+  </div>
+    
+    </div>
+
+    <div class="col-lg-3 bg-light my-4 "style="border-radius:15px; padding-top: 40px;">
+      <h1>Friend List</h1>
+      {% if not context.friends %}
+      <div class="bg-danger-subtle w-100 " style="height: 200px;font-size: 2rem; font-weight: bold ;padding:80px;">
+          <p style="text-align:center">You have no friends yet</p>
+        </div>
+      {% else %}
+      <ul  style="list-style: none;">
+          {% for friend in context.friends %}
+                   
+                  <li style="font-style: inherit ; font-size: 1.3rem ;" > <img src="https://icons-for-free.com/iconfiles/png/512/profile+profile+page+user+icon-1320186864367220794.png"
+                     style="border-radius: 150px;width:70px;margin-left: 20px;"> {{ friend.username }}</li>
+          {% endfor %}
+          <hr style=" size:2; width:100%; color:black; text-align:center; " >
+      
+      </ul>
+{% endif %}
+
+    </div>
+  </div>
+{% endblock %}
+

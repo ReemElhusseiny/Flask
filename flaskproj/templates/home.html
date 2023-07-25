@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1>Posts</h1>
+  
+  <div class="post-modes">
+    <a href="{{ url_for('posts', mode='all') }}">All Posts</a>
+    <a href="{{ url_for('posts', mode='friends') }}">Friends Only</a>
+  </div>
+  
+  <div class="post-list">
+    {% if context.posts %}
+      {% for post in context.posts %}
+        <div class="post">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.content }}</p>
+          <p>Posted by: {{ post.author.username }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No posts found.</p>
+    {% endif %}
+  </div>
+{% endblock %}

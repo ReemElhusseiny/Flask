@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="parent">
+    <div class="container-fluid " style="width: 500px" id="parent2">
+
+    <form action="" method="POST">
+        {{ context.form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb4">Login</legend>
+            <div class="form-group">
+                {{ context.form.username.label(class="form-control-label") }}
+
+                {% if context.form.username.errors %}
+                    {{ context.form.username(class="form-control is-invalid") }}
+                    <div class="invalid-feedback my-2">
+                        {% for error in context.form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ context.form.username(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group my-2">
+                {{ context.form.password.label(class="form-control-label") }}
+               
+                {% if context.form.password.errors %}
+               
+                    {{ context.form.password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback my-2">
+                        {% for error in context.form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ context.form.password(class="form-control") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group  my-2 mb-3">
+            {{ context.form.submit(class="btn btn-primary mt-2") }}
+        </div>
+    </form>
+
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Need an Account ? <a class="ml-2" href="{{ url_for('register') }}">Register</a>
+    </small>
+</div></div>
+<div class="side">
+    <img src="/static/1.jpeg">
+</div>
+</div>
+{% endblock content %}{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
+{% endblock %}

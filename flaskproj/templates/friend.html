@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Friend List</h1>
+{% if not context.friends %}
+<div class="bg-danger-subtle w-100 " style="height: 200px;font-size: 2rem; font-weight: bold ;padding:80px;">
+    <p style="text-align:center">You have no friends yet</p>
+  </div>
+{% else %}
+<ul  style="list-style: none;">
+    {% for friend in context.friends %}
+    {% if not request.args.get('accepted') or friend.id != request.args['accepted']|int %}
+    <li style="font-style: inherit ; font-size: 1.3rem ;" >{{ friend.username }} wants to be your friend.
+        <form method="POST" action="{{ url_for('accept_friend_request', friend_id=friend.id) }}"
+            style="display:inline-block;">
+            <button class=" mx-5 text-light" style="width:200px;background-color:#4F709C;border-radius:20px;" type="submit">Accept</button>
+        </form>
+        <form method="POST" action="{{ url_for('reject_friend_request', friend_id=friend.id) }}"
+            style="display:inline-block;">
+            <button type="submit" class=" mx-5 text-light" style="width:200px;background-color:#7E1717;border-radius:20px;">Reject</button>
+        </form>
+        <hr style=" size:2; width:100%; color:black; text-align:center; " >
+
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

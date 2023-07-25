@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>All Users</h1>
+<div id="par" style="text-align: center; border: 1px solid; display: flex;" >
+<table style="text-align: center; width: 800px;margin-left: 50px; " >
+   
+    <tbody>
+       
+        {% for user in context.user %}
+        <tr>
+            <td style="font-style: inherit ; font-size: 1.3rem ; text-align: left;">  <img src="../static/3.png" style="border-radius: 150px;width:70px; margin:20px;margin-left: 50px;">{{ user.username }}
+               
+            </td>
+            
+            
+            <td rowspan="2">
+                {% if user in context.pending_friends %}
+                <button  class=" mx-5 text-light" style="width:200px;background-color:hsl(214, 19%, 54%);border-radius:20px;" disabled>Pending</button>
+                {% else %}
+                {% if current_user.id != user.id %}
+                {% if user in context.sent_requests %}
+                <button class=" mx-5 text-light" style="width:200px;background-color:hsl(214, 19%, 54%);border-radius:20px;" disabled>Pending</button>
+                {% else %}
+                {% for friend in context.pending_friends %}
+                {% endfor %}
+                <form method="POST" action="{{ url_for('send_request', friend_id=user.id) }}">
+                    {{ context.form.csrf_token }}
+                    {{ context.form.submit(class="mx-5 text-light", style="width: 200px; background-color: hsl(174, 37%, 42%); border-radius: 20px;", label='Send Request') }}   
+                </form>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                
+            </td>
+            
+        </tr>
+        <tr>
+            <td colspan="3">
+    <hr style=" size:2; width:100%; color:black; text-align:center; " >
+
+            </td>
+
+        </tr>
+        
+        
+        {% endfor %}
+        
+    </tbody>
+    
+</table>
+</div>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
+{% endblock %}

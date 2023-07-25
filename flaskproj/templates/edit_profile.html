@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="par">
+    <form method="POST" action="{{ url_for('edit_profile') }}">
+        {{ context.form.csrf_token }}
+        {{ context.form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb4">Join Today</legend>
+            <div class="form-group">
+                {{ context.form.username.label(class="form-control-label") }}
+                {% if context.form.username.errors %}
+                {{ context.form.username(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in context.form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ context.form.username(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ context.form.email.label(class="form-control-label") }}
+
+                {% if context.form.email.errors %}
+                {{ context.form.email(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in context.form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ context.form.email(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ context.form.old_password.label(class="form-control-label") }}
+
+                {% if context.form.old_password.errors %}
+                {{ context.form.old_password(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in context.form.old_password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ context.form.old_password(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ context.form.new_password.label(class="form-control-label") }}
+
+                {% if context.form.new_password.errors %}
+                {{ context.form.new_password(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in context.form.new_password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ context.form.new_password(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ context.form.confirm_password.label(class="form-control-label") }}
+
+                {% if context.form.confirm_password.errors %}
+                {{ context.form.confirm_password(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in context.form.confirm_password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ context.form.confirm_password(class="form-control") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group mb-3">
+            {{ context.form.submit(class="btn btn-primary mt-2") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
+{% endblock %}

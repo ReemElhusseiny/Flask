@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% set page = 'about' %}
+
+{% block content %}
+>
+<div id="parent">
+    <div class="container-fluid " style="width: 500px" id="parent2">
+
+        <h1 class="abouth1 text-secondary my-3">WHO ARE WE</h1>
+        <hr style=" size:2; width:100%; color:black; text-align:center; ">
+
+        <div class="aboutbody my-2 " style="text-align: center;">Our mission is to curate a diverse selection of
+            high-quality products from various categories, including electronics, fashion, home decor, beauty, and
+            more. We work closely with trusted suppliers and brands to ensure that every item you find on our
+            website meets our standards of excellence.
+            We believe in the power of simplicity and convenience. That's why we have designed our website to be
+            user-friendly, allowing you to browse through our extensive collection effortlessly. Whether you're
+            looking for the latest fashion trends, innovative gadgets, or stylish home accessories, we've got you
+            covered.
+        </div>
+    </div>
+
+    <div class="side">
+        <img src="../static/4.png ">
+    </div>
+
+</div>
+
+{% endblock content %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
+{% endblock %}
